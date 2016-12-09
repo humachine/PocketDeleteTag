@@ -1,3 +1,4 @@
+from urlparse import urlparse, parse_qs
 def ReadConsumerKey(filename='pocket.apikeys'):
     """Attempt to read consumer key from locally saved file.
 
@@ -27,7 +28,9 @@ def GetRequestTokenFromResponse(response):
     request_token = contents[1]
     return request_token
 
+def ParseURLEncodedToDict(url):
+    return parse_qs(urlparse(url).query)
+
 def BuildAccessTokReqURL(url_no_params, request_token, redirect_uri):
     url_no_params = url_no_params.rstrip('?')
     return url_no_params + "?" + "request_token=" + request_token + "&" + "redirect_uri=" + redirect_uri
-
