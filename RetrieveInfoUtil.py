@@ -13,7 +13,6 @@ def ReadAccessInfo(filename='pocket.apikeys'):
     Returns:
         consumer_key: str, consumer key of user
     '''
-    print 'Trying to read file'
     try:
         f = open('pocket.apikeys', 'r')
         cons_key = f.readline()
