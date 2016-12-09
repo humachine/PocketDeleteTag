@@ -70,7 +70,7 @@ def main():
         ACCESS_INFO = ObtainNewAccessToken()
     auth_info = {'consumer_key': CONSUMER_KEY, 'access_token':ACCESS_INFO['access_token']}
 
-    TAG_TO_DELETE = 'how stuff works'
+    TAG_TO_DELETE = raw_input('Enter the tag whose articles you wish to delete').strip()
     article_list = GetListOfArticles(auth_info, BuildTagParams(TAG_TO_DELETE))
 
     article_item_ids = GetItemIDsFromArticles(article_list)
