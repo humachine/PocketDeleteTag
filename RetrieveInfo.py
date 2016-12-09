@@ -1,3 +1,4 @@
+import json
 import RetrieveInfoUtil as RetInfUtil
 import webbrowser
 
@@ -36,16 +37,29 @@ def ObtainNewAccessToken(access_info_filename=''):
     RetInfUtil.SaveAccessInfo(ACCESS_INFO, CONSUMER_KEY)
     return ACCESS_INFO
 
-def GetListOfArticles(access_info, params={}):
-    payload = access_info
-    params = {}
-    # params = {'count': 10}
-    payload.update(params)
-    print payload
+
+def DeleteArticleList(auth_info, item_ids):
+    payload = auth_info
+    actions = []
+    for item_id in item_ids:
+        d = {'action': 'delete', 'item_id': item_id}
+        actions.append(d)
+    payload['actions'] = actions
+    r = RetInfUtil.MakeRequest(PocketURLs.ModifyURL, payload)
+    print r.text
+
+
+def GetItemIDsFromArticles(art_list):
+    item_ids = [art_list['list'][it]['item_id'] for it in art_list['list']]
+    return item_ids
+
+def GetListOfArticles(auth_info, params={}):
+    payload = params
+    payload.update(auth_info)
 
     r = RetInfUtil.MakeRequest(PocketURLs.RetrieveURL, payload)
-    print r.content
-    return ""
+    d = r.json()
+    return d
 
 def BuildTagParams(tagname, detailType='simple'):
     return {'tag': tagname, 'detailType': detailType}
@@ -54,8 +68,12 @@ def main():
     ACCESS_INFO = RetInfUtil.ReadAccessInfo()
     if ACCESS_INFO == '':
         ACCESS_INFO = ObtainNewAccessToken()
-    TAG_TO_DELETE = 'verge'
-    article_list = GetListOfArticles(ACCESS_INFO, BuildTagParams(TAG_TO_DELETE))
+    auth_info = {'consumer_key': CONSUMER_KEY, 'access_token':ACCESS_INFO['access_token']}
+
+    TAG_TO_DELETE = 'how stuff works'
+    article_list = GetListOfArticles(auth_info, BuildTagParams(TAG_TO_DELETE))
+
+    article_item_ids = GetItemIDsFromArticles(article_list)
+    DeleteArticleList(auth_info, article_item_ids)
 
 main()
-

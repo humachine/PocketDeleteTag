@@ -2,7 +2,7 @@ import requests
 import urlparse
 
 def MakeRequest(method_url, payload):
-    r = requests.post(method_url, data=payload)
+    r = requests.post(method_url, json=payload)
     return r
 
 def ReadAccessInfo(filename='pocket.apikeys'):
@@ -15,12 +15,12 @@ def ReadAccessInfo(filename='pocket.apikeys'):
     '''
     try:
         f = open('pocket.apikeys', 'r')
-        cons_key = f.readline()
-        access_key = f.readline().strip()
+        cons_token = f.readline()
+        access_token = f.readline().strip()
         username  = f.readline().strip()
-        if access_key == "" or username == "":
+        if access_token == "" or username == "":
             return ""
-        return {'access_key': access_key, 'username': username}
+        return {'access_token': access_token, 'username': username}
     except IOError:
         return ""
 
