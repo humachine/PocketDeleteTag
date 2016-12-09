@@ -26,3 +26,8 @@ def GetRequestTokenFromResponse(response):
         raise IOError
     request_token = contents[1]
     return request_token
+
+def BuildAccessTokReqURL(url_no_params, request_token, redirect_uri):
+    url_no_params = url_no_params.rstrip('?')
+    return url_no_params + "?" + "request_token=" + request_token + "&" + "redirect_uri=" + redirect_uri
+
