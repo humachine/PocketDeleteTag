@@ -1,8 +1,7 @@
 ## Delete All Articles of a Tag from Pocket
 
 Ever wanted to delete all the articles of a particular tag from Pocket? 
-The deleteTag Pocket app (or the website) does not have a mode to bulk delete/favourite artilces of a tag.  
-
+The Pocket app (or the website) does not have a mode to bulk delete/favourite artilces of a tag.
 This repo s a way to use the Pocket API to achieve the same. Here's the steps:
 - Create a new app on Pocket's Developers page and obtain the consumer key.
 - Save it somewhere safe (default: pocket.apikeys in the working directory)
