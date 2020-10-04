@@ -21,9 +21,9 @@ def ObtainNewAccessToken(access_info_filename=''):
 
     #Generate Access Token Request URL. The URL directs users to a page where they can authenticate the app
     auth_req_url = RetInfUtil.BuildAccessTokReqURL(AUTHORIZE_REQ_URL, REQUEST_TOKEN, REDIRECT_URI)
-    print auth_req_url
+    print (auth_req_url)
     webbrowser.open(auth_req_url, new=2)
-    raw_input('\nPress ENTER once you complete authorizing application ')
+    input('\nPress ENTER once you complete authorizing application ')
 
     #Convert Request token to Access Token
     payload = {'consumer_key': CONSUMER_KEY, 'code': REQUEST_TOKEN}
@@ -46,7 +46,7 @@ def DeleteArticleList(auth_info, item_ids):
         actions.append(d)
     payload['actions'] = actions
     r = RetInfUtil.MakeRequest(PocketURLs.ModifyURL, payload)
-    print r.text
+    print (r.text)
 
 
 def GetItemIDsFromArticles(art_list):
@@ -70,7 +70,7 @@ def main():
         ACCESS_INFO = ObtainNewAccessToken()
     auth_info = {'consumer_key': CONSUMER_KEY, 'access_token':ACCESS_INFO['access_token']}
 
-    TAG_TO_DELETE = raw_input('Enter the tag whose articles you wish to delete').strip()
+    TAG_TO_DELETE = input('Enter the tag whose articles you wish to delete').strip()
     article_list = GetListOfArticles(auth_info, BuildTagParams(TAG_TO_DELETE))
 
     article_item_ids = GetItemIDsFromArticles(article_list)

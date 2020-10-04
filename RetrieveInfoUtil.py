@@ -1,5 +1,5 @@
 import requests
-import urlparse
+import urllib.parse
 
 def MakeRequest(method_url, payload):
     r = requests.post(method_url, json=payload)
@@ -40,7 +40,7 @@ def ReadConsumerKey(filename='pocket.apikeys'):
     return consumer_key
 
 def ParseURLEncodedQuery(url_query):
-    return urlparse.parse_qs(url_query)
+    return urllib.parse.parse_qs(url_query)
 
 def BuildAccessTokReqURL(url_no_params, request_token, redirect_uri):
     url_no_params = url_no_params.rstrip('?')
